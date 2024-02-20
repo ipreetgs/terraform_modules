@@ -21,11 +21,43 @@ phases:
 
   build:
     commands:
-      # Optionally, plan to show changes
       #- terraform plan
       echo "hello"
+      # Generate a plan file
+      # - terraform plan -out=tfplan
+      # - terraform show -json tfplan > plan.json
+      # - |
+      #   if [ $(jq '.resource_changes | length' plan.json) -eq 0 ]; then
+      #     echo "No infrastructure changes detected, skipping build."
+      #     exit 0
+      #   else
+      #     echo "Infrastructure changes detected, proceeding with apply."
+      #     terraform apply -auto-approve tfplan
+      #   fi
+
       # CAUTION: The following apply command will automatically apply changes
       # - terraform apply -auto-approve
+
+      # - if [ "$IS_PR_CREATION" = "true" ]; then
+      #     echo "PR creation detected. Checking for infrastructure changes..."
+      #     terraform plan
+      #   elif [ "$IS_PR_MERGE" = "true" ]; then
+      #     echo "PR merge detected. Applying infrastructure changes..."
+      #     terraform plan -out=tfplan
+      #     terraform show -json tfplan > plan.json
+      #     - |
+      #       if [ $(jq '.resource_changes | length' plan.json) -eq 0 ]; then
+      #         echo "No infrastructure changes detected, skipping build."
+      #         exit 0
+      #       else
+      #         echo "Infrastructure changes detected, proceeding with apply."
+      #         terraform apply -auto-approve tfplan
+      #       fi
+
+      #     # terraform apply -auto-approve tfplan
+      #   else
+      #     echo "Unknown build context"
+      #   fi
 
 #  post_build:
 #    commands:
