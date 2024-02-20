@@ -1,4 +1,41 @@
 version: 0.2
 
 phases:
+  install:
+    runtime-versions:
+      python: 3.8 # Example runtime, adjust as needed
+    commands:
+      # Download and unzip Terraform. Adjust version as necessary.
+      - curl -o terraform.zip https://releases.hashicorp.com/terraform/1.1.0/terraform_1.1.0_linux_amd64.zip
+      - unzip terraform.zip
+      - mv terraform $HOME/bin
+      - export PATH=$PATH:$HOME/bin
+      # Verify Terraform installation
+      - terraform --version
+
+  pre_build:
+    commands:
+      # Initialize Terraform
+      #- terraform init
+      echo "hello"
+
+  build:
+    commands:
+      # Optionally, plan to show changes
+      #- terraform plan
+      echo "hello"
+      # CAUTION: The following apply command will automatically apply changes
+      # - terraform apply -auto-approve
+
+#  post_build:
+#    commands:
+      # Post-build steps or cleanup
+
+#artifacts:
+#  files:
+    #- location_of_artifacts_if_any # Specify artifact locations if necessary
+
+#cache:
+#  paths:
+#    - '.terraform/**/*' # Cache the .terraform directory to speed up future builds
 
