@@ -1,0 +1,1 @@
+cat errors.log | grep '501'|grep '2024'|grep '10'
